@@ -30,9 +30,9 @@ function sendEmail(toEmail, message, URL) {
       Data: message
      }
     };
-  params.Source = "rocketegg@gmail.com";
+  params.Source = toEmail;
   params.ReplyToAddresses = [
-     'rocketegg@gmail.com',
+     toEmail,
     /* more items */
   ];
   // Create the promise and SES service object

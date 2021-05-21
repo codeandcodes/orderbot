@@ -16,7 +16,7 @@ function checkStatus(res) {
   }
 }
 
-function checkBestBuy(availCb, unavailCb, counter) {
+function checkBestBuy(availCb, unavailCb, counter, email) {
   fetch("https://www.bestbuy.com/button-state/api/v5/button-state?skus=6426149&conditions=&storeId=&destinationZipCode=&context=pdp&consolidated=false&source=buttonView&xboxAllAccess=false", {
     "headers": {
       "authority": "www.bestbuy.com",
@@ -38,11 +38,11 @@ function checkBestBuy(availCb, unavailCb, counter) {
   })
    .then(checkStatus)
    .then(res => res.json())
-   .then(json => handleResponse(json, availCb, unavailCb, counter))
+   .then(json => handleResponse(json, availCb, unavailCb, counter, email))
    .catch(error => { console.log('request failed', error); });
 }
 
-function handleResponse(res, availCb, unavailCb, counter) {
+function handleResponse(res, availCb, unavailCb, counter, email) {
   var states = res.buttonStateResponseInfos.map(r => r.buttonState);
   if (states.length > 0 && states[0] != "SOLD_OUT" && found == false) {
     found = true; // send email just once
@@ -55,7 +55,7 @@ function handleResponse(res, availCb, unavailCb, counter) {
   if (counter % 3600 == 0) {
     found = false;
     unavailCb([], URL, "");
-    email.sendEmail("rocketegg@gmail.com", "", "Checked " + counter + " times @ " + Date.now());
+    email.sendEmail(email, "", "Checked " + counter + " times @ " + Date.now());
   }
 }
 
