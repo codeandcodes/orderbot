@@ -1,0 +1,15 @@
+{
+  "name": "orderbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "orderbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.853.0",
+    "node-fetch": "^2.6.1"
+  }
+}
