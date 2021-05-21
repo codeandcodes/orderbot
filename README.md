@@ -3,11 +3,11 @@
 # Requirements
 
 1. Download node.js (I'm using v12.13.0, but probably any newer version would work).
-  - [nodejs.org](https://nodejs.org/en/download/)
+    - [nodejs.org](https://nodejs.org/en/download/)
 
 1. It should come with NPM installed.
 
-1. You need aws credentials so orderbot can send you an email
+1. You need aws credentials so orderbot can send you an email. 
 
 ```bash
 $ cat ~/.aws/credentials
@@ -17,6 +17,12 @@ $ cat ~/.aws/credentials
 aws_access_key_id = ABCDEFG12345
 aws_secret_access_key = H+ABCDEFG12345
 ```
+
+    - if not, do this
+    ```bash
+    $ touch ~/.aws/credentials
+    $ add the content above with your key_id and access_key
+    ```
 
 # Installation
 
@@ -30,7 +36,7 @@ aws_secret_access_key = H+ABCDEFG12345
     ```bash
     $ cd orderbot
     $ npm install
-    # modify email config in orderbot.js
+    # modify [email config](https://github.com/codeandcodes/orderbot/blob/master/orderbot.js#L8) in orderbot.js
     $ node orderbot.js
     ```
 
