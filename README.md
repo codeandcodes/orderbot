@@ -18,11 +18,11 @@ aws_access_key_id = ABCDEFG12345
 aws_secret_access_key = H+ABCDEFG12345
 ```
 
-    - if not, do this
-    ```bash
-    $ touch ~/.aws/credentials
-    $ add the content above with your key_id and access_key
-    ```
+if not, do this
+```bash
+$ touch ~/.aws/credentials
+# add the content above with your key_id and access_key
+```
 
 # Installation
 
