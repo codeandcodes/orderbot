@@ -55,7 +55,7 @@ function handleResponse(res, notifier, counter) {
     var subject = "PS5 Unavailable at Bestbuy :(";
     notifier.notifyUnavailable([], URL, subject, statusText);
   }
-  if (counter % 3600 == 5) {
+  if (counter % 3600 == 0) {
     found = false;
     var subject = "PS5 Bestbuy Status Update :/";
     notifier.notifyStatus(URL, subject, statusText);
