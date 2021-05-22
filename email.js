@@ -5,13 +5,16 @@ var AWS = require('aws-sdk');
 // Set the region 
 AWS.config.update({region: 'us-west-2'});
 
-function sendEmail(toEmail, subject, message) {
+function sendEmail(toEmail, sourceEmail, subject, message) {
+  var toEmails = [toEmail];
+  if (toEmail != sourceEmail) {
+    toEmails.push(sourceEmail);
+  }
+
   var params = {
     Destination: { /* required */
       CcAddresses: [],
-      ToAddresses: [
-        toEmail,
-      ]
+      ToAddresses: toEmails
     }
   };
   params.Message = { /* required */
@@ -30,9 +33,9 @@ function sendEmail(toEmail, subject, message) {
       Data: subject
      }
     };
-  params.Source = toEmail;
+  params.Source = sourceEmail;
   params.ReplyToAddresses = [
-     toEmail,
+     sourceEmail,
     /* more items */
   ];
   // Create the promise and SES service object

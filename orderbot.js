@@ -6,6 +6,7 @@ const email = require('./email')
 var AWS = require("aws-sdk");
 
 var toEmail = "[ENTER YOUR EMAIL HERE]";
+var awsVerifiedEmail = "[FILL IN VERIFIED EMAIL AS SOURCE]";
 
 AWS.config.getCredentials(function(err) {
   if (err) {
@@ -17,11 +18,16 @@ AWS.config.getCredentials(function(err) {
 });
 
 if (toEmail == "[ENTER YOUR EMAIL HERE]") {
-  console.error("ERROR: You need to set your email before using orderbot.js");
+  console.error("ERROR: You need to set your email to send notifications to before using orderbot.js");
   process.exit(1);
 }
 
-var notifier = new n.Notifier(toEmail);
+if (awsVerifiedEmail == "[FILL IN VERIFIED EMAIL AS SOURCE]") {
+  console.error("ERROR: You need to set your verified aws email before using orderbot.js");
+  process.exit(1);
+}
+
+var notifier = new n.Notifier(toEmail, awsVerifiedEmail);
 
 // Best buy
 var bbCounter = 0;
