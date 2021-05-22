@@ -5,7 +5,7 @@ var AWS = require('aws-sdk');
 // Set the region 
 AWS.config.update({region: 'us-west-2'});
 
-function sendEmail(toEmail, message, URL) {
+function sendEmail(toEmail, subject, message) {
   var params = {
     Destination: { /* required */
       CcAddresses: [],
@@ -18,7 +18,7 @@ function sendEmail(toEmail, message, URL) {
     Body: { /* required */
       Html: {
        Charset: "UTF-8",
-       Data: message + " " + URL
+       Data: message,
       },
       Text: {
        Charset: "UTF-8",
@@ -27,7 +27,7 @@ function sendEmail(toEmail, message, URL) {
      },
      Subject: {
       Charset: 'UTF-8',
-      Data: message
+      Data: subject
      }
     };
   params.Source = toEmail;

@@ -16,7 +16,7 @@ function checkStatus(res) {
   }
 }
 
-function checkBestBuy(availCb, unavailCb, counter, email) {
+function checkBestBuy(notifier, counter, toEmail) {
   fetch("https://www.bestbuy.com/button-state/api/v5/button-state?skus=6426149&conditions=&storeId=&destinationZipCode=&context=pdp&consolidated=false&source=buttonView&xboxAllAccess=false", {
     "headers": {
       "authority": "www.bestbuy.com",
@@ -38,24 +38,27 @@ function checkBestBuy(availCb, unavailCb, counter, email) {
   })
    .then(checkStatus)
    .then(res => res.json())
-   .then(json => handleResponse(json, availCb, unavailCb, counter, email))
+   .then(json => handleResponse(json, notifier, counter))
    .catch(error => { console.log('request failed', error); });
 }
 
-function handleResponse(res, availCb, unavailCb, counter, email) {
+function handleResponse(res, notifier, counter) {
   var states = res.buttonStateResponseInfos.map(r => r.buttonState);
+  var statusText = "Checked " + counter + " times @ " + Date.now();
   if (states.length > 0 && states[0] != "SOLD_OUT" && found == false) {
     found = true; // send email just once
-    availCb(states[0], URL, 
-      " *********************************\nAvailable at Bestbuy NOW!!!\n*********************************");
+    var subject = "PS5 AVAILABLE NOW! :)";
+    var message = " *********************************\nAvailable at Bestbuy NOW!!!\n*********************************";
+    notifier.notifyAvailable(states[0], URL, subject, message);
   } 
   if (counter % 60 == 0) {
-    unavailCb([], URL, "");
+    var subject = "PS5 Unavailable at Bestbuy :(";
+    notifier.notifyUnavailable([], URL, subject, statusText);
   }
-  if (counter % 3600 == 0) {
+  if (counter % 3600 == 5) {
     found = false;
-    unavailCb([], URL, "");
-    email.sendEmail(email, "", "Checked " + counter + " times @ " + Date.now());
+    var subject = "PS5 Bestbuy Status Update :/";
+    notifier.notifyStatus(URL, subject, statusText);
   }
 }
 

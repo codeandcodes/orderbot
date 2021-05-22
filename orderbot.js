@@ -21,11 +21,13 @@ if (toEmail == "[ENTER YOUR EMAIL HERE]") {
   process.exit(1);
 }
 
+var notifier = new n.Notifier(toEmail);
+
 // Best buy
 var bbCounter = 0;
 bbNotify = function() {
   bbCounter++;
-  bb.CheckSite(n.NotifyAvailable, n.NotifyUnavailable, bbCounter, toEmail);
+  bb.CheckSite(notifier, bbCounter);
 }
 
 // walmart
